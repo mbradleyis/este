@@ -2,7 +2,7 @@ import Component from '../components/component.react';
 import React from 'react';
 import {Link} from 'react-router';
 import ToCheckItem from './tocheckitem.react';
-import {msg, msgs} from '../intl/store';
+import {msg, msgs} from '../intl';
 
 class ToCheck extends Component {
 

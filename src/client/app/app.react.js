@@ -4,14 +4,8 @@ import Footer from './footer.react';
 import Header from './header.react';
 import React from 'react';
 import {RouteHandler} from 'react-router';
-import {appState} from '../state';
+import dispatcher from '../state';
 import {measureRender} from '../console';
-
-// All stores must be imported here.
-import '../auth/store';
-import '../examples/store';
-import '../todos/store';
-import '../users/store';
 
 class App extends Component {
 
@@ -21,26 +15,32 @@ class App extends Component {
   }
 
   getState() {
-    const viewer = appState.get().getIn(['users', 'viewer']);
-    return appState.get().merge({
-      isLoggedIn: !!viewer,
-      viewer: viewer
-    }).toObject();
+    return dispatcher.state.toObject();
+  }
+
+  static childContextTypes = {
+    dispatch: React.PropTypes.func
+  }
+
+  getChildContext() {
+    return {
+      dispatch: ::dispatcher.dispatch
+    }
   }
 
   // Why componentWillMount instead of componentDidMount.
   // https://github.com/este/este/issues/274
   componentWillMount() {
     if (!process.env.IS_BROWSER) return;
-    appState.on('change', () => {
+    dispatcher.onChange = () => {
       measureRender(done => this.setState(this.getState(), done));
-    });
+    };
   }
 
   render() {
     return (
       <div className="page">
-        <Header isLoggedIn={this.state.isLoggedIn} />
+        <Header />
         <RouteHandler {...this.state} />
         <Footer />
       </div>

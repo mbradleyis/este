@@ -1,4 +1,4 @@
-import * as state from '../../client/state';
+import dispatcher from '../../client/state';
 import DocumentTitle from 'react-document-title';
 import Html from './html.react';
 import Promise from 'bluebird';
@@ -11,8 +11,8 @@ import routes from '../../client/routes';
 import stateMerger from '../lib/merger';
 
 export default function render(req, res, ...customStates) {
-  const appState = immutable.fromJS(initialState).mergeWith(stateMerger, ...customStates).toJS();
-  return renderPage(req, res, appState);
+  //const appState = dispatcher.state.mergeWith(stateMerger, ...customStates);
+  return renderPage(req, res, dispatcher.state);
 }
 
 function renderPage(req, res, appState) {
@@ -47,7 +47,7 @@ function renderPage(req, res, appState) {
 }
 
 function loadAppStateThenRenderHtml(Handler, appState) {
-  state.appState.load(appState);
+  dispatcher.state = appState;
   return getPageHtml(Handler, appState);
 }
 

@@ -6,17 +6,16 @@ import NewTodo from '../todos/newtodo.react';
 import React from 'react';
 import ToCheck from './tocheck.react';
 import immutable from 'immutable';
-import {msg} from '../intl/store';
+import {msg} from '../intl';
 
 class Todos extends Component {
 
   static propTypes = {
-    pendingActions: React.PropTypes.instanceOf(immutable.Map).isRequired,
     todos: React.PropTypes.instanceOf(immutable.Map).isRequired
   };
 
   render() {
-    const {todos, pendingActions} = this.props;
+    const {todos} = this.props;
     const list = todos.get('list');
 
     return (
@@ -25,7 +24,6 @@ class Todos extends Component {
           <NewTodo todo={todos.get('newTodo')} />
           <List
             editables={todos.get('editables')}
-            pendingActions={pendingActions}
             todos={list}
           />
           <Buttons clearAllEnabled={list.size > 0} />

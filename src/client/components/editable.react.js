@@ -4,7 +4,7 @@ import React from 'react';
 import Textarea from 'react-textarea-autosize';
 import classnames from 'classnames';
 import immutable from 'immutable';
-import {msg} from '../intl/store';
+import {msg} from '../intl';
 
 const State = immutable.Record({
   isEditing: false,

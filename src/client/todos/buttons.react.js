@@ -3,7 +3,7 @@ import './buttons.styl';
 import * as actions from '../todos/actions';
 import Component from '../components/component.react';
 import React from 'react';
-import {msg} from '../intl/store';
+import {msg} from '../intl';
 
 class TodoButtons extends Component {
 
@@ -11,17 +11,22 @@ class TodoButtons extends Component {
     clearAllEnabled: React.PropTypes.bool.isRequired
   };
 
+  static contextTypes = {
+    dispatch: React.PropTypes.func
+  };
+
   render() {
+    const dispatch = this.context.dispatch;
     return (
       <div className="buttons">
         <button
           children={msg('todos.clearAll')}
           disabled={!this.props.clearAllEnabled}
-          onClick={actions.clearAll}
+          onClick={() => dispatch(actions.clearAll())}
         />
         <button
           children={msg('todos.add100')}
-          onClick={actions.addHundredTodos}
+          onClick={() => dispatch(actions.addHundredTodos())}
         />
         {/* TODO: Reimplement undo. */}
         {/*<button

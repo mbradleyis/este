@@ -3,7 +3,7 @@ import * as actions from './actions';
 import Component from '../components/component.react';
 import React from 'react';
 import immutable from 'immutable';
-import {msg} from '../intl/store';
+import {msg} from '../intl';
 
 class NewTodo extends Component {
 
@@ -11,19 +11,24 @@ class NewTodo extends Component {
     todo: React.PropTypes.instanceOf(immutable.Record)
   };
 
+  static contextTypes = {
+    dispatch: React.PropTypes.func
+  };
+
   addTodoOnEnter(e) {
     if (e.key === 'Enter')
-      actions.addTodo(this.props.todo);
+      return actions.addTodo(this.props.todo);
   }
 
   render() {
+    const dispatch = this.context.dispatch;
     return (
       <input
         autoFocus
         className="new-todo"
         name="title"
-        onChange={actions.onNewTodoFieldChange}
-        onKeyDown={(e) => this.addTodoOnEnter(e)}
+        onChange={(e) => dispatch(actions.onNewTodoFieldChange(e))}
+        onKeyDown={(e) => dispatch(this.addTodoOnEnter(e))}
         placeholder={msg('todos.newTodoPlaceholder')}
         value={this.props.todo.title}
       />

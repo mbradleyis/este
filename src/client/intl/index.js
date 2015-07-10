@@ -1,9 +1,10 @@
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
-import {i18nCursor} from '../state';
+import i18n from '../i18n'
 import {register} from '../dispatcher';
 import {List, Map} from 'immutable';
 
+const locale = 'en';
 const cachedInstances = Object.create(null);
 const intlRelativeFormat = new IntlRelativeFormat;
 
@@ -16,8 +17,8 @@ function getCachedInstanceOf(message) {
 }
 
 export function msg(path, values = null): string {
-  const pathParts = ['messages'].concat(path.split('.'));
-  const message = i18nCursor(pathParts);
+  const pathParts = [locale].concat(path.split('.'));
+  const message = i18n.getIn(pathParts);
 
   if (message == null)
     throw new ReferenceError('Could not find Intl message: ' + path);
@@ -27,8 +28,8 @@ export function msg(path, values = null): string {
 
 // get List[.slice(start[, end])] of message Maps like [{key: message_key, txt: message_text}, ...]
 export function msgs(path, values = null, ...sliceParams): List<Map> {
-  const pathParts = ['messages'].concat(path.split('.'));
-  const messages = i18nCursor(pathParts);
+  const pathParts = [locale].concat(path.split('.'));
+  const messages = i18n.getIn(pathParts);
 
   if (messages == null)
     throw new ReferenceError('Could not find Intl messages: ' + path);
@@ -51,8 +52,3 @@ export function dateFormat(date, locales?, options?): string {
   const dateTimeFormat = new Intl.DateTimeFormat(locales, options);
   return dateTimeFormat.format(date);
 }
-
-export const dispatchToken = register(({action, data}) => {
-  // TODO: Allow changing locale without app reload. Reset cache, force update
-  // root app component and PureComponents as well.
-});

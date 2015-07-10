@@ -3,18 +3,17 @@ import Component from '../components/component.react';
 import React from 'react';
 import Todo from './todo.react';
 import immutable from 'immutable';
-import {msg} from '../intl/store';
+import {msg} from '../intl';
 
 class List extends Component {
 
   static propTypes = {
     editables: React.PropTypes.instanceOf(immutable.Map).isRequired,
-    pendingActions: React.PropTypes.instanceOf(immutable.Map).isRequired,
     todos: React.PropTypes.instanceOf(immutable.List)
   };
 
   render() {
-    const {todos, editables, pendingActions} = this.props;
+    const {todos, editables} = this.props;
 
     if (!todos.size)
       return (
@@ -25,9 +24,7 @@ class List extends Component {
       <ol className="todo-list">
         {todos.map(todo => {
           const editable = editables.get(todo.id);
-          const disabled =
-            !!editable &&
-            pendingActions.has(actions.onEditableSave.toString());
+          const disabled = !!editable
 
           return (
             <Todo
