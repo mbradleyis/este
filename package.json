@@ -34,7 +34,6 @@
     "express": "^4.11.2",
     "extract-text-webpack-plugin": "^0.8.0",
     "file-loader": "^0.8.1",
-    "flux": "^2.0.1",
     "glob": "^5.0.13",
     "gulp": "^3.8.10",
     "gulp-bg": "0.0.5",
@@ -76,6 +75,7 @@
     "stylus-loader": "^1.0.0",
     "url-loader": "^0.5.5",
     "validator": "^3.34.0",
+    "vlux": "^0.1.2",
     "webpack": "^1.9.5",
     "webpack-dev-server": "^1.7.0",
     "yargs": "^3.3.1"

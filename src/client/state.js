@@ -1,5 +1,5 @@
 import {fromJS} from 'immutable'
-import Dispatcher from './dispatcher'
+import {Dispatcher} from 'vlux'
 import todosStore from './todos/store'
 
 const initialState = fromJS({});

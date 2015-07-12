@@ -1,7 +1,6 @@
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 import i18n from '../i18n'
-import {register} from '../dispatcher';
 import {List, Map} from 'immutable';
 
 const locale = 'en';
